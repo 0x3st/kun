@@ -1,7 +1,9 @@
 {
   "version": "1.0",
   "type": "link",
+  "url": "https://kun.py.kg/",
   "title": "坤坤 12:00",
+  "description": "固定以北京时间换算的 2.5 倍速坤历时钟。",
   "author_name": "坤坤时钟",
   "provider_name": "KUN KUN CHRONOGRAPH",
   "provider_url": "https://kun.py.kg/",
