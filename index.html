@@ -3,20 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#111827" />
-  <title>坤坤时钟</title>
+  <meta name="theme-color" content="#fbfaf7" />
+  <meta name="description" content="一个带有篮球、2.5 与舞台彩蛋的蔡徐坤灵感坤历时钟。" />
+  <title>坤坤时钟 · 2.5 STAGE</title>
   <style>
     :root {
-      --bg: #0b1020;
-      --panel: rgba(18, 25, 48, 0.82);
-      --panel-2: rgba(28, 38, 68, 0.72);
-      --text: #f8fafc;
-      --muted: #a8b3cf;
-      --line: rgba(255,255,255,.10);
-      --accent: #ffd166;
-      --accent-2: #7dd3fc;
-      --danger: #fb7185;
-      --shadow: 0 24px 80px rgba(0,0,0,.35);
+      --bg: #0c0b09;
+      --panel: rgba(26, 23, 18, 0.84);
+      --panel-2: rgba(42, 35, 24, 0.72);
+      --text: #fff7e5;
+      --muted: #b9aa8c;
+      --line: rgba(255, 231, 177, .14);
+      --accent: #f5b941;
+      --accent-strong: #ffcf68;
+      --accent-2: #f3e0b0;
+      --orange: #e86f32;
+      --ink: #15120e;
+      --shadow: 0 28px 100px rgba(0,0,0,.48);
     }
 
     * { box-sizing: border-box; }
@@ -24,52 +27,184 @@
     html, body {
       min-height: 100%;
       margin: 0;
-      font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      font-family: "Avenir Next", "PingFang SC", "Microsoft YaHei", sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at 15% 20%, rgba(125,211,252,.16), transparent 28%),
-        radial-gradient(circle at 80% 15%, rgba(255,209,102,.14), transparent 30%),
-        linear-gradient(145deg, #080b16 0%, #101831 56%, #0b1020 100%);
+        radial-gradient(circle at 18% 8%, rgba(245,185,65,.16), transparent 26%),
+        radial-gradient(circle at 88% 42%, rgba(232,111,50,.10), transparent 24%),
+        linear-gradient(145deg, #080706 0%, #17130d 55%, #0c0b09 100%);
+      overflow-x: hidden;
     }
 
     body {
       display: grid;
       place-items: center;
-      padding: 28px 16px;
+      padding: 34px 16px;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .22;
+      background-image: linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+      background-size: 46px 46px;
+      mask-image: linear-gradient(to bottom, black, transparent 78%);
     }
 
     .app {
-      width: min(980px, 100%);
+      width: min(1040px, 100%);
+      position: relative;
+      z-index: 1;
     }
 
     .hero {
-      padding: 28px;
+      padding: clamp(24px, 5vw, 52px);
       border: 1px solid var(--line);
-      border-radius: 28px;
-      background: linear-gradient(145deg, rgba(25,34,63,.92), rgba(10,15,31,.88));
+      border-radius: 34px;
+      background:
+        linear-gradient(125deg, rgba(40,32,20,.95), rgba(13,11,9,.94) 62%),
+        var(--panel);
       box-shadow: var(--shadow);
-      backdrop-filter: blur(18px);
+      backdrop-filter: blur(20px);
       overflow: hidden;
       position: relative;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 560px;
+      height: 560px;
+      right: -170px;
+      bottom: -310px;
+      border: 1px solid rgba(245,185,65,.22);
+      border-radius: 50%;
+      box-shadow: 0 0 0 30px rgba(245,185,65,.035), 0 0 0 80px rgba(245,185,65,.025);
+      transform: rotate(-17deg);
+      pointer-events: none;
     }
 
     .hero::after {
       content: "2.5";
       position: absolute;
-      right: 18px;
-      top: -22px;
+      right: 26px;
+      top: -48px;
       font-weight: 900;
-      font-size: clamp(88px, 19vw, 190px);
-      color: rgba(255,255,255,.035);
+      font-size: clamp(120px, 22vw, 250px);
+      color: rgba(245,185,65,.065);
       pointer-events: none;
       letter-spacing: -.08em;
+      font-style: italic;
+    }
+
+    .hero-top,
+    .eyebrow,
+    .hero-id,
+    .motif-row,
+    .progress-label,
+    .card-heading,
+    .status-badge,
+    .footer {
+      position: relative;
+      z-index: 1;
+    }
+
+    .meme-display {
+      position: absolute;
+      top: 25px;
+      right: clamp(22px, 5vw, 52px);
+      width: 154px;
+      z-index: 3;
+      transform: rotate(2.5deg);
+    }
+
+    .meme-display-head,
+    .meme-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .meme-display-head {
+      margin-bottom: 7px;
+      padding: 0 3px;
+    }
+
+    .meme-display-head span:first-child {
+      color: var(--accent-strong);
+    }
+
+    .meme-frame {
+      aspect-ratio: 1;
+      padding: 6px;
+      border: 1px solid rgba(245,185,65,.42);
+      border-radius: 16px;
+      background: rgba(12,11,9,.82);
+      box-shadow: 0 16px 30px rgba(0,0,0,.36), 0 0 0 4px rgba(245,185,65,.035);
+      overflow: hidden;
+    }
+
+    .meme-frame img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      object-fit: cover;
+      background: #6aa9dc;
+    }
+
+    .meme-actions {
+      margin-top: 7px;
+      padding: 0 3px;
+    }
+
+    .meme-actions span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .next-meme {
+      border: 0;
+      padding: 0;
+      color: var(--accent-strong);
+      background: transparent;
+      font: inherit;
+      font-size: 9px;
+      letter-spacing: .12em;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .next-meme:hover,
+    .next-meme:focus-visible {
+      color: var(--text);
+      text-decoration: underline;
+      outline: none;
+    }
+
+    .hero-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
     }
 
     .eyebrow {
       display: flex;
       align-items: center;
       gap: 10px;
-      color: var(--accent);
+      color: var(--accent-strong);
       font-size: 13px;
       font-weight: 800;
       letter-spacing: .16em;
@@ -85,49 +220,126 @@
       animation: pulse 1.6s ease-in-out infinite;
     }
 
+    .hero-id {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .18em;
+      margin-right: 170px;
+      white-space: nowrap;
+    }
+
     @keyframes pulse {
       50% { opacity: .35; transform: scale(.72); }
     }
 
     h1 {
-      margin: 12px 0 6px;
-      font-size: clamp(34px, 6vw, 64px);
+      margin: 16px 0 8px;
+      font-family: Georgia, "Songti SC", serif;
+      font-size: clamp(42px, 8vw, 82px);
       line-height: 1;
-      letter-spacing: -.05em;
+      letter-spacing: -.08em;
+      font-weight: 900;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 span {
+      color: var(--accent-strong);
+    }
+
+    h1 em {
+      color: var(--text);
+      font-style: normal;
+      margin-left: .12em;
     }
 
     .subtitle {
       color: var(--muted);
       margin: 0;
-      font-size: 15px;
+      font-size: 14px;
+      letter-spacing: .02em;
+      position: relative;
+      z-index: 1;
     }
 
     .date {
-      margin-top: 34px;
-      font-size: clamp(22px, 4vw, 38px);
+      margin-top: 42px;
+      font-size: clamp(22px, 4vw, 37px);
       font-weight: 750;
       letter-spacing: -.02em;
+      position: relative;
+      z-index: 1;
     }
 
     .clock {
       margin-top: 8px;
       font-variant-numeric: tabular-nums;
-      font-size: clamp(52px, 12vw, 116px);
+      font-size: clamp(50px, 12vw, 124px);
       line-height: 1;
       font-weight: 850;
       letter-spacing: -.065em;
-      text-shadow: 0 0 30px rgba(125,211,252,.12);
+      color: var(--text);
+      text-shadow: 0 0 34px rgba(245,185,65,.14);
+      position: relative;
+      z-index: 1;
     }
 
     .clock .fraction {
-      color: var(--accent-2);
+      color: var(--accent);
       font-size: .38em;
       letter-spacing: -.02em;
       margin-left: 8px;
     }
 
+    .motif-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-top: 18px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(245,185,65,.16);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .15em;
+    }
+
+    .motif-row strong {
+      color: var(--accent-strong);
+      font-weight: 900;
+    }
+
+    .easter-egg {
+      border: 1px solid rgba(245,185,65,.3);
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: var(--accent-strong);
+      background: rgba(245,185,65,.07);
+      font: inherit;
+      font-size: 10px;
+      letter-spacing: .12em;
+      cursor: pointer;
+      transition: transform .2s ease, background .2s ease, color .2s ease;
+    }
+
+    .easter-egg:hover,
+    .easter-egg:focus-visible {
+      color: var(--ink);
+      background: var(--accent-strong);
+      transform: translateY(-2px);
+      outline: none;
+    }
+
+    .easter-egg:active {
+      transform: translateY(0) rotate(-2deg);
+    }
+
     .progress-wrap {
-      margin-top: 28px;
+      margin-top: 26px;
+      position: relative;
+      z-index: 1;
     }
 
     .progress-label {
@@ -140,18 +352,61 @@
     }
 
     .progress {
-      height: 10px;
+      height: 12px;
       border-radius: 999px;
       background: rgba(255,255,255,.08);
-      overflow: hidden;
+      overflow: visible;
+      border: 1px solid rgba(245,185,65,.12);
+      position: relative;
     }
 
     .progress > div {
       height: 100%;
       width: 0%;
       border-radius: inherit;
-      background: linear-gradient(90deg, var(--accent-2), var(--accent));
+      background: linear-gradient(90deg, var(--orange), var(--accent-strong));
       transition: width .15s linear;
+      box-shadow: 0 0 18px rgba(245,185,65,.4);
+      position: relative;
+      z-index: 1;
+    }
+
+    .progress-ball {
+      position: absolute;
+      top: 50%;
+      left: 0%;
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--accent-strong);
+      border-radius: 50%;
+      background: var(--orange);
+      box-shadow: 0 0 0 3px rgba(12,11,9,.72), 0 0 15px rgba(245,185,65,.55);
+      transform: translate(-50%, -50%);
+      transition: left .15s linear;
+      z-index: 2;
+    }
+
+    .progress-ball::before,
+    .progress-ball::after {
+      content: "";
+      position: absolute;
+      background: rgba(21,18,14,.72);
+    }
+
+    .progress-ball::before {
+      width: 2px;
+      height: 100%;
+      left: 8px;
+      top: 0;
+      transform: rotate(40deg);
+    }
+
+    .progress-ball::after {
+      width: 100%;
+      height: 2px;
+      left: 0;
+      top: 8px;
+      transform: rotate(-35deg);
     }
 
     .grid {
@@ -162,11 +417,26 @@
     }
 
     .card {
-      padding: 18px;
+      padding: 20px;
       border: 1px solid var(--line);
-      border-radius: 20px;
+      border-radius: 22px;
       background: var(--panel);
       backdrop-filter: blur(14px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.025);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      right: -62px;
+      bottom: -66px;
+      border: 1px solid rgba(245,185,65,.14);
+      border-radius: 50%;
+      pointer-events: none;
     }
 
     .card .label {
@@ -182,6 +452,30 @@
       font-size: 20px;
       font-weight: 750;
       font-variant-numeric: tabular-nums;
+      color: var(--accent-2);
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .mini-mark {
+      display: grid;
+      place-items: center;
+      width: 27px;
+      height: 27px;
+      border: 1px solid rgba(245,185,65,.4);
+      border-radius: 50%;
+      color: var(--accent-strong);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: -.05em;
+      transform: rotate(-10deg);
     }
 
     .rules {
@@ -195,34 +489,77 @@
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
-      margin-top: 14px;
+      margin-top: 16px;
+      position: relative;
+      z-index: 1;
     }
 
     .rule {
       padding: 12px 13px;
       border-radius: 14px;
       background: var(--panel-2);
-      color: #dbe6ff;
+      color: #eedfbd;
       font-size: 13px;
       border: 1px solid rgba(255,255,255,.06);
+      transition: border-color .2s ease, transform .2s ease, background .2s ease;
+    }
+
+    .rule:hover {
+      border-color: rgba(245,185,65,.28);
+      background: rgba(245,185,65,.1);
+      transform: translateY(-2px);
     }
 
     .status {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      min-height: 190px;
+      background:
+        radial-gradient(circle at 76% 20%, rgba(245,185,65,.18), transparent 28%),
+        linear-gradient(145deg, rgba(47,35,19,.88), rgba(23,19,13,.94));
     }
 
     .status strong {
       display: block;
-      font-size: 21px;
+      font-family: Georgia, "Songti SC", serif;
+      font-size: 28px;
       margin-top: 8px;
+      color: var(--accent-strong);
+      position: relative;
+      z-index: 1;
+    }
+
+    .status-badge {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      padding: 7px 10px;
+      border: 1px solid rgba(245,185,65,.22);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .14em;
+    }
+
+    .status-badge::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
     }
 
     .small {
       color: var(--muted);
       font-size: 12px;
       line-height: 1.6;
+      position: relative;
+      z-index: 1;
     }
 
     .footer {
@@ -230,76 +567,1195 @@
       color: var(--muted);
       font-size: 12px;
       margin-top: 16px;
+      letter-spacing: .06em;
+    }
+
+    .footer strong {
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .footer-source {
+      display: block;
+      margin-top: 5px;
+      color: rgba(185,170,140,.72);
+      font-size: 10px;
+      line-height: 1.5;
+    }
+
+    .footer-source a {
+      color: var(--muted);
+    }
+
+    .footer-source a:hover,
+    .footer-source a:focus-visible {
+      color: var(--accent-strong);
     }
 
     @media (max-width: 720px) {
-      .hero { padding: 22px; border-radius: 22px; }
+      body { padding: 18px 12px; }
+      .hero { padding: 22px; border-radius: 25px; }
+      .hero-id { display: none; }
+      .meme-display {
+        position: relative;
+        top: auto;
+        right: auto;
+        width: min(132px, 42vw);
+        margin: 22px 0 0 auto;
+      }
       .grid { grid-template-columns: 1fr; }
       .rules { grid-template-columns: 1fr; }
       .rule-list { grid-template-columns: 1fr; }
       .clock { letter-spacing: -.045em; }
+      .motif-row { align-items: flex-start; flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+  <style id="timeis-inspired-theme">
+    :root {
+      --bg: #fbfaf7;
+      --panel: transparent;
+      --panel-2: #f3f0e8;
+      --text: #151515;
+      --muted: #77736b;
+      --line: #d9d5cc;
+      --accent: #c89523;
+      --accent-strong: #aa7510;
+      --accent-2: #312a1c;
+      --orange: #d9672d;
+      --ink: #151515;
+      --shadow: none;
+    }
+
+    html,
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Avenir Next", "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+
+    body {
+      display: block;
+      padding: 0;
+    }
+
+    body::before {
+      opacity: .32;
+      background-image: linear-gradient(to bottom, rgba(21,21,21,.045) 1px, transparent 1px);
+      background-size: 100% 92px;
+      mask-image: linear-gradient(to bottom, black, transparent 76%);
+    }
+
+    .app {
+      width: min(1080px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 29px 0 32px;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      backdrop-filter: none;
+      overflow: visible;
+    }
+
+    .hero::before {
+      width: 360px;
+      height: 360px;
+      right: -186px;
+      bottom: -235px;
+      border: 1px solid rgba(200,149,35,.22);
+      box-shadow: 0 0 0 27px rgba(200,149,35,.04), 0 0 0 72px rgba(200,149,35,.025);
+      transform: none;
+    }
+
+    .hero::after {
+      right: 166px;
+      top: 64px;
+      font-family: "Avenir Next", sans-serif;
+      font-size: clamp(126px, 19vw, 210px);
+      color: rgba(200,149,35,.075);
+      letter-spacing: -.12em;
+      z-index: 0;
+    }
+
+    .hero-top,
+    .eyebrow,
+    .hero-id,
+    .motif-row,
+    .progress-label,
+    .card-heading,
+    .status-badge,
+    .footer {
+      z-index: 2;
+    }
+
+    .eyebrow {
+      gap: 9px;
+      color: var(--ink);
+      font-size: 10px;
+      letter-spacing: .16em;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      background: var(--orange);
+      box-shadow: 0 0 0 3px rgba(217,103,45,.14);
+      animation: none;
+    }
+
+    .hero-id {
+      margin-right: 170px;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: .14em;
+    }
+
+    h1 {
+      margin: 20px 0 7px;
+      color: var(--text);
+      font-family: Georgia, "Songti SC", serif;
+      font-size: clamp(38px, 6vw, 66px);
+      font-weight: 800;
+      letter-spacing: -.08em;
+    }
+
+    h1 span {
+      color: var(--accent-strong);
+    }
+
+    h1 em {
+      color: var(--text);
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: .04em;
+    }
+
+    .date {
+      margin-top: 36px;
+      color: var(--text);
+      font-size: clamp(21px, 3.6vw, 34px);
+      font-weight: 500;
+      letter-spacing: -.035em;
+    }
+
+    .clock {
+      margin-top: 3px;
+      color: var(--text);
+      font-family: "Avenir Next", "Helvetica Neue", sans-serif;
+      font-size: clamp(62px, 13vw, 142px);
+      font-weight: 300;
+      letter-spacing: -.09em;
+      text-shadow: none;
+    }
+
+    .clock .fraction {
+      margin-left: 7px;
+      color: var(--accent-strong);
+      font-size: .27em;
+      font-weight: 500;
+      letter-spacing: -.02em;
+    }
+
+    .motif-row {
+      justify-content: flex-start;
+      gap: 18px;
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: .14em;
+    }
+
+    .motif-row strong {
+      color: var(--accent-strong);
+    }
+
+    .easter-egg {
+      padding: 0;
+      border: 0;
+      border-bottom: 1px solid var(--accent);
+      border-radius: 0;
+      color: var(--ink);
+      background: transparent;
+      font-size: 10px;
+      letter-spacing: .1em;
+    }
+
+    .easter-egg:hover,
+    .easter-egg:focus-visible {
+      color: var(--accent-strong);
+      background: transparent;
+      transform: none;
+    }
+
+    .progress-wrap {
+      margin-top: 26px;
+    }
+
+    .progress-label {
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: .08em;
+    }
+
+    .progress {
+      height: 4px;
+      border: 0;
+      border-radius: 0;
+      background: #e3dfd6;
+    }
+
+    .progress > div {
+      height: 4px;
+      border-radius: 0;
+      background: linear-gradient(90deg, var(--ink), var(--accent));
+      box-shadow: none;
+    }
+
+    .progress-ball {
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--bg);
+      background: var(--orange);
+      box-shadow: 0 0 0 1px var(--orange);
+    }
+
+    .progress-ball::before {
+      left: 5px;
+      width: 2px;
+      background: rgba(21,21,21,.8);
+    }
+
+    .progress-ball::after {
+      top: 5px;
+      height: 2px;
+      background: rgba(21,21,21,.8);
+    }
+
+    .meme-display {
+      top: 27px;
+      right: 0;
+      width: 138px;
+      transform: none;
+    }
+
+    .meme-display-head,
+    .meme-actions {
+      color: var(--muted);
+      font-size: 8px;
+      letter-spacing: .13em;
+    }
+
+    .meme-display-head span:first-child {
+      color: var(--accent-strong);
+    }
+
+    .meme-frame {
+      padding: 4px;
+      border: 1px solid #b7b1a6;
+      border-radius: 0;
+      background: var(--bg);
+      box-shadow: 4px 4px 0 rgba(200,149,35,.22);
+    }
+
+    .meme-frame img {
+      border-radius: 0;
+    }
+
+    .meme-actions {
+      margin-top: 8px;
+    }
+
+    .next-meme {
+      color: var(--ink);
+      font-size: 8px;
+    }
+
+    .next-meme:hover,
+    .next-meme:focus-visible {
+      color: var(--accent-strong);
+    }
+
+    .grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin-top: 25px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .card {
+      min-width: 0;
+      padding: 16px 20px 18px;
+      border: 0;
+      border-right: 1px solid var(--line);
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      backdrop-filter: none;
+    }
+
+    .card:last-child {
+      border-right: 0;
+    }
+
+    .card::after {
+      display: none;
+    }
+
+    .card .label {
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: .12em;
+    }
+
+    .card .value {
+      margin-top: 10px;
+      color: var(--text);
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .card-heading {
+      align-items: center;
+    }
+
+    .mini-mark {
+      width: 24px;
+      height: 24px;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      color: var(--accent-strong);
+      font-size: 8px;
+      transform: none;
+    }
+
+    .rules {
+      grid-template-columns: 1.25fr .75fr;
+      gap: 0;
+      margin-top: 22px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .rules > .card {
+      padding: 20px 20px 24px;
+    }
+
+    .rules > .card:first-child {
+      border-right: 1px solid var(--line);
+    }
+
+    .rule-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0;
+      margin-top: 17px;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .rule {
+      min-height: 48px;
+      padding: 12px 13px;
+      border: 0;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      border-radius: 0;
+      background: transparent;
+      color: #4c4840;
+      font-size: 12px;
+    }
+
+    .rule:hover {
+      border-color: var(--line);
+      background: rgba(200,149,35,.07);
+      transform: none;
+    }
+
+    .status {
+      min-height: 220px;
+      border-right: 0 !important;
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .status .label {
+      color: #aaa59b;
+    }
+
+    .status strong {
+      margin-top: 10px;
+      color: var(--accent-strong);
+      font-size: 28px;
+    }
+
+    .status-badge {
+      margin-top: 16px;
+      padding: 6px 9px;
+      border: 1px solid rgba(245,185,65,.44);
+      border-radius: 0;
+      color: #d9d3c6;
+      font-size: 8px;
+      letter-spacing: .13em;
+    }
+
+    .status-badge::before {
+      width: 5px;
+      height: 5px;
+      background: var(--orange);
+      box-shadow: none;
+    }
+
+    .small {
+      color: #aaa59b;
+      font-size: 11px;
+    }
+
+    .footer {
+      margin-top: 0;
+      padding: 16px 0 24px;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: .05em;
+    }
+
+    .footer strong {
+      color: var(--ink);
+    }
+
+    .footer-source {
+      margin-top: 6px;
+      color: #9a958c;
+      font-size: 9px;
+    }
+
+    .footer-source a {
+      color: var(--muted);
+    }
+
+    @media (max-width: 720px) {
+      body { padding: 0; }
+      .app { width: min(100% - 24px, 560px); }
+      .hero { padding-top: 23px; }
+      .hero-id { display: none; }
+      .meme-display {
+        top: 20px;
+        right: 0;
+        width: 104px;
+      }
+      h1 {
+        margin-top: 75px;
+        font-size: clamp(36px, 12vw, 54px);
+      }
+      .date { margin-top: 28px; }
+      .clock { font-size: clamp(58px, 18vw, 92px); }
+      .grid { grid-template-columns: 1fr; }
+      .card,
+      .card:last-child {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .card:last-child { border-bottom: 0; }
+      .rules { grid-template-columns: 1fr; }
+      .rules > .card:first-child { border-right: 0; }
+      .status { min-height: 190px; }
+      .rule-list { grid-template-columns: 1fr; }
+      .motif-row { align-items: flex-start; flex-wrap: wrap; }
+    }
+  </style>
+  <style id="timeis-authentic-layout">
+    :root {
+      --paper: #ffffff;
+      --charcoal: #2d2d2d;
+      --gold: #c89523;
+      --basketball: #d9682f;
+      --soft-gray: #ededeb;
+      --mid-gray: #a5a5a2;
+    }
+
+    html,
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--charcoal);
+    }
+
+    body {
+      display: block;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      display: none;
+    }
+
+    .time-page {
+      min-height: 100vh;
+      background: var(--paper);
+    }
+
+    .time-stage {
+      width: min(1540px, 100%);
+      min-height: 604px;
+      margin: 0 auto;
+      padding: 0 56px 30px;
+      position: relative;
+    }
+
+    .site-header {
+      height: 90px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .brand-meme {
+      width: 90px;
+      height: 90px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .brand-meme img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .brand {
+      width: 144px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      padding-left: 30px;
+      background: var(--gold);
+      color: #fff;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: .16em;
+    }
+
+    .header-marks {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding-top: 17px;
+      color: #aaa9a5;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
+
+    .basketball-mark {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--charcoal);
+      border-radius: 50%;
+      background: var(--basketball);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .basketball-mark::before,
+    .basketball-mark::after {
+      content: "";
+      position: absolute;
+      background: var(--charcoal);
+    }
+
+    .basketball-mark::before {
+      width: 2px;
+      height: 130%;
+      left: 10px;
+      top: -3px;
+      transform: rotate(38deg);
+    }
+
+    .basketball-mark::after {
+      width: 130%;
+      height: 2px;
+      left: -3px;
+      top: 10px;
+      transform: rotate(-30deg);
+    }
+
+    .accuracy-copy {
+      margin-top: 17px;
+      max-width: 600px;
+    }
+
+    .accuracy-copy h1 {
+      margin: 0 0 2px;
+      color: var(--charcoal);
+      font-family: "Avenir Next", "PingFang SC", sans-serif;
+      font-size: clamp(25px, 2.3vw, 35px);
+      font-weight: 800;
+      letter-spacing: -.04em;
+      line-height: 1.18;
+    }
+
+    .accuracy-copy p {
+      margin: 1px 0;
+      color: #494947;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .clock {
+      width: max-content;
+      max-width: 100%;
+      margin: 15px auto 0;
+      color: var(--charcoal);
+      font-family: "Avenir Next", "Helvetica Neue", sans-serif;
+      font-size: clamp(108px, 15vw, 250px);
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      line-height: .9;
+      letter-spacing: -.085em;
+      white-space: nowrap;
+      text-shadow: none;
+      position: relative;
+      z-index: 1;
+    }
+
+    .clock .fraction {
+      display: none;
+    }
+
+    .time-details {
+      width: min(690px, 100%);
+      margin: 20px 0 0 auto;
+      text-align: right;
+    }
+
+    .date {
+      margin: 0;
+      color: var(--charcoal);
+      font-size: clamp(25px, 2.6vw, 39px);
+      font-weight: 500;
+      letter-spacing: -.035em;
+      line-height: 1.2;
+    }
+
+    .detail-line {
+      margin-top: 4px;
+      display: flex;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 6px 18px;
+      color: #575755;
+      font-size: 12px;
+    }
+
+    .detail-line strong {
+      color: inherit;
+      font-weight: 500;
+    }
+
+    .quick-times {
+      margin-top: 18px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .quick-times > div {
+      min-width: 112px;
+      min-height: 62px;
+      padding: 8px 11px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--soft-gray);
+      color: var(--charcoal);
+      line-height: 1.05;
+    }
+
+    .quick-times span {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+    }
+
+    .quick-times strong {
+      margin-top: 5px;
+      font-size: 15px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .progress-wrap {
+      width: min(690px, 100%);
+      margin: 16px 0 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .progress-label {
+      margin-bottom: 7px;
+      color: #6a6a67;
+      font-size: 10px;
+      letter-spacing: .08em;
+    }
+
+    .progress {
+      height: 4px;
+      border: 0;
+      border-radius: 0;
+      background: #dededb;
+      overflow: visible;
+    }
+
+    .progress > div {
+      height: 4px;
+      border-radius: 0;
+      background: linear-gradient(90deg, var(--charcoal), var(--gold));
+      box-shadow: none;
+    }
+
+    .progress-ball {
+      width: 14px;
+      height: 14px;
+      border: 2px solid #fff;
+      background: var(--basketball);
+      box-shadow: 0 0 0 1px var(--basketball);
+    }
+
+    .meme-display {
+      position: absolute;
+      top: 83px;
+      right: 56px;
+      width: 126px;
+      z-index: 3;
+      transform: none;
+    }
+
+    .meme-display-head,
+    .meme-actions {
+      color: #777773;
+      font-size: 8px;
+      letter-spacing: .12em;
+    }
+
+    .meme-display-head span:first-child {
+      color: var(--gold);
+    }
+
+    .meme-frame {
+      padding: 4px;
+      border: 1px solid #c8c8c3;
+      border-radius: 0;
+      background: #fff;
+      box-shadow: 4px 4px 0 rgba(200,149,35,.28);
+    }
+
+    .meme-frame img {
+      border-radius: 0;
+    }
+
+    .next-meme {
+      color: var(--charcoal);
+    }
+
+    .dark-band {
+      width: 100%;
+      background: var(--charcoal);
+      color: #fff;
+    }
+
+    .dark-inner {
+      width: min(1180px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 46px 0 26px;
+    }
+
+    .timezone-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 18px 42px;
+      color: #f3f3f1;
+      font-size: clamp(17px, 2vw, 28px);
+      font-weight: 400;
+    }
+
+    .timezone-links span:nth-child(4) {
+      color: var(--gold);
+    }
+
+    .kun-keywords {
+      margin: 78px auto 72px;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px 30px;
+      line-height: 1;
+    }
+
+    .kun-keywords strong {
+      color: var(--gold);
+      font-size: clamp(58px, 8vw, 104px);
+      letter-spacing: -.07em;
+    }
+
+    .kun-keywords span {
+      color: #fff;
+      font-size: clamp(28px, 4.5vw, 66px);
+      font-weight: 800;
+      letter-spacing: -.04em;
+    }
+
+    .kun-keywords span:nth-of-type(2) {
+      padding: 4px 10px;
+      background: #fff;
+      color: var(--charcoal);
+    }
+
+    .kun-keywords span:nth-of-type(3) {
+      color: var(--basketball);
+      font-size: clamp(24px, 3.2vw, 48px);
+    }
+
+    .dark-content {
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 52px;
+      padding-top: 30px;
+      border-top: 1px solid #555552;
+    }
+
+    .rule-board h2,
+    .stage-note h2 {
+      margin: 0;
+      color: #fff;
+      font-size: 24px;
+      letter-spacing: -.03em;
+    }
+
+    .rule-list {
+      margin-top: 17px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0;
+      border: 0;
+    }
+
+    .rule {
+      min-height: 49px;
+      padding: 13px 12px 13px 0;
+      border: 0;
+      border-bottom: 1px solid #4e4e4b;
+      border-radius: 0;
+      background: transparent;
+      color: #d0d0cc;
+      font-size: 12px;
+    }
+
+    .rule:nth-child(odd) {
+      margin-right: 22px;
+    }
+
+    .rule:hover {
+      border-color: var(--gold);
+      background: transparent;
+      color: #fff;
+      transform: none;
+    }
+
+    .stage-note {
+      padding-left: 26px;
+      border-left: 1px solid #555552;
+    }
+
+    .stage-note h2 {
+      margin-top: 19px;
+      color: var(--gold);
+    }
+
+    .stage-note p {
+      margin: 12px 0 0;
+      color: #b9b9b5;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .status-badge {
+      margin: 0;
+      padding: 6px 8px;
+      border: 1px solid rgba(200,149,35,.7);
+      border-radius: 0;
+      color: #d8d8d2;
+      font-size: 8px;
+    }
+
+    .status-badge::before {
+      background: var(--basketball);
+      box-shadow: none;
+    }
+
+    .easter-egg {
+      margin-top: 18px;
+      padding: 0 0 3px;
+      border: 0;
+      border-bottom: 1px solid var(--gold);
+      border-radius: 0;
+      background: transparent;
+      color: #fff;
+      font-size: 10px;
+    }
+
+    .easter-egg:hover,
+    .easter-egg:focus-visible {
+      background: transparent;
+      color: var(--gold);
+      transform: none;
+    }
+
+    .footer {
+      margin: 48px 0 0;
+      padding: 18px 0 0;
+      display: flex;
+      align-items: baseline;
+      gap: 7px;
+      border-top: 1px solid #4a4a47;
+      color: #969692;
+      font-size: 9px;
+      white-space: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .footer::-webkit-scrollbar {
+      display: none;
+    }
+
+    .footer strong {
+      color: #fff;
+    }
+
+    .footer a {
+      color: #888884;
+    }
+
+    @media (max-width: 820px) {
+      .time-stage {
+        min-height: auto;
+        padding: 0 18px 28px;
+      }
+
+      .brand {
+        width: 126px;
+        padding-left: 22px;
+        font-size: 14px;
+      }
+
+      .site-header {
+        height: 76px;
+      }
+
+      .brand-meme {
+        width: 76px;
+        height: 76px;
+      }
+
+      .accuracy-copy {
+        max-width: none;
+        padding-right: 0;
+      }
+
+      .accuracy-copy h1 {
+        font-size: 22px;
+      }
+
+      .accuracy-copy p {
+        font-size: 11px;
+      }
+
+      .meme-display {
+        position: absolute;
+        top: 78px;
+        right: 18px;
+        width: 88px;
+        margin: 0;
+      }
+
+      .meme-actions span {
+        display: none;
+      }
+
+      .clock {
+        margin-top: 52px;
+        font-size: clamp(62px, 19vw, 116px);
+        letter-spacing: -.09em;
+      }
+
+      .time-details {
+        margin-top: 25px;
+      }
+
+      .date {
+        font-size: clamp(21px, 6.7vw, 31px);
+      }
+
+      .detail-line {
+        display: block;
+        font-size: 10px;
+      }
+
+      .detail-line span {
+        display: block;
+        margin-top: 3px;
+      }
+
+      .quick-times {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .quick-times > div {
+        min-width: 0;
+        padding: 7px 5px;
+      }
+
+      .quick-times strong {
+        font-size: 12px;
+      }
+
+      .dark-inner {
+        width: calc(100% - 36px);
+        padding-top: 42px;
+      }
+
+      .timezone-links {
+        gap: 14px 22px;
+      }
+
+      .kun-keywords {
+        margin: 56px auto;
+        gap: 12px 19px;
+      }
+
+      .dark-content {
+        grid-template-columns: 1fr;
+        gap: 38px;
+      }
+
+      .stage-note {
+        padding: 28px 0 0;
+        border-top: 1px solid #555552;
+        border-left: 0;
+      }
+
+      .rule-list {
+        grid-template-columns: 1fr;
+      }
+
+      .rule:nth-child(odd) {
+        margin-right: 0;
+      }
     }
   </style>
 </head>
 <body>
-  <main class="app">
-    <section class="hero">
-      <div class="eyebrow"><span class="dot"></span> KUN CLOCK · LIVE</div>
-      <h1>坤坤时钟</h1>
-      <p class="subtitle">一坤日 = 2.5 个普通日 · 一坤时 = 2.5 个普通小时</p>
+  <main class="time-page">
+    <section class="time-stage">
+      <header class="site-header">
+        <div class="brand-meme" aria-label="随机小黄鸡表情包">
+          <img id="kunMeme" src="assets/kun-memes/v2-8e8e6a43e36bc2f6fb41acaeaa631e7f_1440w.jpg" alt="随机小黄鸡表情包" decoding="async" />
+        </div>
+        <div class="header-marks" aria-label="坤坤时钟标记">
+          <span>2.5</span>
+          <span class="basketball-mark" aria-hidden="true"></span>
+        </div>
+      </header>
 
-      <div id="kunDate" class="date">正在计算坤历日期…</div>
+      <div class="accuracy-copy">
+        <h1>你的坤历正在准确运行！</h1>
+        <p>固定以北京时间（UTC+8）换算，1 坤秒 = 2.5 普通秒。</p>
+        <p>现在的坤坤时间：</p>
+      </div>
+
       <div id="kunClock" class="clock">00:00:00<span class="fraction">.000</span></div>
+
+      <div class="time-details">
+        <div id="kunDate" class="date">正在计算坤历日期…</div>
+        <div class="detail-line">
+          <span>北京时间：<strong id="normalTime">—</strong></span>
+          <span>坤历纪元：北京时间 2018-01-01 00:00</span>
+        </div>
+
+        <div class="quick-times">
+          <div><span>坤季</span><strong id="kunSeason">—</strong></div>
+          <div><span>坤年进度</span><strong id="yearProgress">—</strong></div>
+          <div><span>今日状态</span><strong id="todayStatus">—</strong></div>
+        </div>
+      </div>
 
       <div class="progress-wrap">
         <div class="progress-label">
           <span>当前坤日进度</span>
           <span id="dayProgressText">0.000%</span>
         </div>
-        <div class="progress"><div id="dayProgressBar"></div></div>
-      </div>
-    </section>
-
-    <section class="grid">
-      <div class="card">
-        <div class="label">普通时间</div>
-        <div id="normalTime" class="value">—</div>
-      </div>
-      <div class="card">
-        <div class="label">当前坤季</div>
-        <div id="kunSeason" class="value">—</div>
-      </div>
-      <div class="card">
-        <div class="label">坤年进度</div>
-        <div id="yearProgress" class="value">—</div>
-      </div>
-    </section>
-
-    <section class="rules">
-      <div class="card">
-        <div class="label">当前采用的坤坤历规则</div>
-        <div class="rule-list">
-          <div class="rule">纪元：2018-01-01 00:00</div>
-          <div class="rule">1 坤日 = 60 普通小时</div>
-          <div class="rule">每年 10 个坤月</div>
-          <div class="rule">单月 37 日，双月 36 日</div>
-          <div class="rule">每两月构成一个坤季</div>
-          <div class="rule">四年一闰，百年不闰，四百年再闰</div>
-        </div>
-      </div>
-
-      <div class="card status">
-        <div>
-          <div class="label">今日状态</div>
-          <strong id="todayStatus">—</strong>
-        </div>
-        <div class="small">
-          闰年在十月结束后增加一个独立的“闰坤日”。网页按设备本地时区解释纪元时刻。
+        <div class="progress">
+          <div id="dayProgressBar"></div>
+          <span class="progress-ball" aria-hidden="true"></span>
         </div>
       </div>
     </section>
 
-    <div class="footer">刷新页面不会重置时间；所有计算均在浏览器本地完成。</div>
+    <section class="dark-band">
+      <div class="dark-inner">
+        <div class="dark-content">
+          <section class="rule-board">
+            <h2>坤坤历规则</h2>
+            <div class="rule-list">
+              <div class="rule">纪元：北京时间 2018-01-01 00:00</div>
+              <div class="rule">1 坤日 = 60 普通小时</div>
+              <div class="rule">每年 10 个坤月</div>
+              <div class="rule">单月 37 日，双月 36 日</div>
+              <div class="rule">每两月构成一个坤季</div>
+              <div class="rule">四年一闰，百年不闰，四百年再闰</div>
+            </div>
+          </section>
+
+          <aside class="stage-note">
+            <span class="status-badge">BASKETBALL COURT READY</span>
+            <h2>2.5 倍速的时间宇宙</h2>
+            <p>闰年在十月结束后增加一个独立的“闰坤日”。纪元与普通时间均固定采用北京时间（UTC+8）。</p>
+          </aside>
+        </div>
+
+        <footer class="footer">
+          <strong>KUN KUN CHRONOGRAPH</strong>
+          <span>·</span>
+          <span>图片源自知乎专栏《<a href="https://zhuanlan.zhihu.com/p/578391399" target="_blank" rel="noreferrer">389张小黄鸡头像</a>》</span>
+          <span>·</span>
+          <span>域名来自 <a href="https://nic.py.kg" target="_blank" rel="noreferrer">nic.py.kg</a></span>
+        </footer>
+      </div>
+    </section>
   </main>
 
   <script>
@@ -307,8 +1763,9 @@
       const SPEED = 2.5;
       const REAL_DAY_MS = 24 * 60 * 60 * 1000;
       const KUN_DAY_REAL_MS = SPEED * REAL_DAY_MS;
-      const EPOCH = new Date(2018, 0, 1, 0, 0, 0, 0);
+      const EPOCH = new Date("2018-01-01T00:00:00+08:00");
       const MONTH_LENGTHS = [37, 36, 37, 36, 37, 36, 37, 36, 37, 36];
+      let serverOffsetMs = 0;
 
       const el = {
         kunDate: document.getElementById("kunDate"),
@@ -318,8 +1775,43 @@
         yearProgress: document.getElementById("yearProgress"),
         dayProgressText: document.getElementById("dayProgressText"),
         dayProgressBar: document.getElementById("dayProgressBar"),
-        todayStatus: document.getElementById("todayStatus")
+        dayProgressBall: document.querySelector(".progress-ball"),
+        todayStatus: document.getElementById("todayStatus"),
+        kunMeme: document.getElementById("kunMeme")
       };
+
+      const memeImages = [
+        "assets/kun-memes/v2-8e8e6a43e36bc2f6fb41acaeaa631e7f_1440w.jpg",
+        "assets/kun-memes/v2-b6d7ddc9c6acab51c394c28de9488fac_1440w.jpg",
+        "assets/kun-memes/v2-e7776d7562f28493260b153e55fc6f57_1440w.jpg",
+        "assets/kun-memes/v2-78cf3df798e3fc4237328bfcf0f94d66_1440w.jpg",
+        "assets/kun-memes/v2-c3eed84589c7665e32b408e20466af31_1440w.jpg",
+        "assets/kun-memes/v2-9a06b2b31bd8a99eac5fb8a1e628958f_1440w.jpg",
+        "assets/kun-memes/v2-ec3593b3bba8c548ffd83b6772a7282f_1440w.jpg",
+        "assets/kun-memes/v2-50fda9f17fe543a773629c3268642676_1440w.jpg",
+        "assets/kun-memes/v2-18b76a365847700cf69c89a99d7e5dc1_1440w.jpg",
+        "assets/kun-memes/v2-3270471012b58d5cf6ec25651fa289cc_1440w.jpg",
+        "assets/kun-memes/v2-90c8017b4f30e6ab9df1661fc7bf86ef_1440w.jpg",
+        "assets/kun-memes/v2-de9bcc0cca5f34dceded94e288ad3239_1440w.jpg",
+        "assets/kun-memes/v2-6e09d61eb599c17faf1aab3c9a6bd272_1440w.jpg",
+        "assets/kun-memes/v2-f7ede2f68427ea1d47bac07f7638e964_1440w.jpg",
+        "assets/kun-memes/v2-71317c2e992618d5ab71d5da6505c879_1440w.jpg",
+        "assets/kun-memes/v2-8f7da597f1141d61c4e37791bcb18eca_1440w.jpg",
+        "assets/kun-memes/v2-64bd7ebf640fce85f1c698e0fabdbbd0_1440w.jpg",
+        "assets/kun-memes/v2-8be051117f29f7697793c4617bbe2a8e_1440w.jpg",
+        "assets/kun-memes/v2-fc19638c77c0aa19036b802b3e12089e_1440w.jpg",
+        "assets/kun-memes/v2-29d48f2bc91e7da7e33d64cb9dd95f2e_1440w.jpg",
+        "assets/kun-memes/v2-cbf727b98c5bd3284b96fa42d3085661_1440w.jpg",
+        "assets/kun-memes/v2-5b4725a18a4fae16cc41b6d97e87d2d4_1440w.jpg",
+        "assets/kun-memes/v2-fb4c6772a32fc9c7e105903d0f9a468e_1440w.jpg",
+        "assets/kun-memes/v2-65e15ec689ae38da393e17031c773fe6_1440w.jpg",
+        "assets/kun-memes/v2-104af5a86f119d0856156970f1cfca3e_1440w.jpg",
+        "assets/kun-memes/v2-19882cdf84e5af044927515328bd2ef4_1440w.jpg",
+        "assets/kun-memes/v2-531fe2c328a3116791a73c5b39cd87c2_1440w.jpg",
+        "assets/kun-memes/v2-73b5ee1c1a334e749c1f2732d9fb57d0_1440w.jpg",
+        "assets/kun-memes/v2-1d00d8f430b85cfb70b0c876a1fe12a6_1440w.jpg",
+        "assets/kun-memes/v2-94ad3670b5cdc4d836ea2cc67f046619_1440w.jpg"
+      ];
 
       function isLeapKunYear(year) {
         return year % 400 === 0 || (year % 4 === 0 && year % 100 !== 0);
@@ -412,13 +1904,14 @@
       }
 
       function update() {
-        const now = new Date();
+        const now = new Date(Date.now() + serverOffsetMs);
         const k = parseKunDate(now);
 
         el.normalTime.textContent = new Intl.DateTimeFormat("zh-CN", {
           year: "numeric", month: "2-digit", day: "2-digit",
           hour: "2-digit", minute: "2-digit", second: "2-digit",
-          hour12: false
+          hour12: false,
+          timeZone: "Asia/Shanghai"
         }).format(now);
 
         if (k.beforeEpoch) {
@@ -429,6 +1922,7 @@
           el.todayStatus.textContent = "等待元年";
           el.dayProgressText.textContent = "—";
           el.dayProgressBar.style.width = "0%";
+          el.dayProgressBall.style.left = "0%";
           return;
         }
 
@@ -453,13 +1947,46 @@
         const dayPercent = k.dayFraction * 100;
         el.dayProgressText.textContent = `${dayPercent.toFixed(3)}%`;
         el.dayProgressBar.style.width = `${dayPercent}%`;
+        el.dayProgressBall.style.left = `${Math.min(dayPercent, 100)}%`;
 
         const yearPercent = ((k.dayOfYearZeroBased + k.dayFraction) / k.yearLength) * 100;
         el.yearProgress.textContent = `${yearPercent.toFixed(3)}%`;
       }
 
+      function showRandomMeme() {
+        const randomIndex = Math.floor(Math.random() * memeImages.length);
+        el.kunMeme.src = memeImages[randomIndex];
+        el.kunMeme.alt = "随机小黄鸡表情包";
+      }
+
+      showRandomMeme();
+
+      async function syncWithApi() {
+        if (location.protocol === "file:") return;
+
+        const requestStartedAt = Date.now();
+        try {
+          const response = await fetch("/now", { cache: "no-store" });
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+          const payload = await response.json();
+          if (!payload.ok || !Number.isFinite(payload.unixMs)) {
+            throw new Error("Invalid /now response");
+          }
+
+          const requestFinishedAt = Date.now();
+          const localMidpoint = (requestStartedAt + requestFinishedAt) / 2;
+          serverOffsetMs = payload.unixMs - localMidpoint;
+          update();
+        } catch (error) {
+          console.warn("坤历 API 暂时不可用，继续使用最近一次校时结果。", error);
+        }
+      }
+
       update();
       setInterval(update, 40);
+      syncWithApi();
+      setInterval(syncWithApi, 60 * 1000);
     })();
   </script>
 </body>
