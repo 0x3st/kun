@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#fbfaf7" />
   <meta name="description" content="一个带有篮球、2.5 与舞台彩蛋的蔡徐坤灵感坤历时钟。" />
-  <title>坤坤时钟 · 2.5 STAGE</title>
+  <title>坤坤 00:00</title>
   <style>
     :root {
       --bg: #0c0b09;
@@ -1477,6 +1477,13 @@
       margin-right: 22px;
     }
 
+    .rule.love-kun-rule {
+      grid-column: 1 / -1;
+      margin-right: 0;
+      border-bottom-color: var(--gold);
+      color: #f1d591;
+    }
+
     .rule:hover {
       border-color: var(--gold);
       background: transparent;
@@ -1499,6 +1506,106 @@
       color: #b9b9b5;
       font-size: 12px;
       line-height: 1.7;
+    }
+
+    .converter-intro {
+      margin-top: 7px !important;
+    }
+
+    .converter-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      margin-top: 18px;
+      border-bottom: 1px solid #555552;
+    }
+
+    .converter-tab {
+      padding: 9px 6px;
+      border: 0;
+      border-bottom: 2px solid transparent;
+      color: #9d9d99;
+      background: transparent;
+      font: inherit;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      cursor: pointer;
+    }
+
+    .converter-tab[aria-selected="true"] {
+      border-bottom-color: var(--gold);
+      color: #fff;
+    }
+
+    .converter-tab:focus-visible,
+    .converter-field input:focus-visible,
+    .converter-field select:focus-visible {
+      outline: 1px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    .converter-panel {
+      padding-top: 16px;
+    }
+
+    .converter-panel[hidden] {
+      display: none;
+    }
+
+    .converter-field > label {
+      display: block;
+      margin-bottom: 7px;
+      color: #aaa9a5;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .1em;
+    }
+
+    .converter-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 92px;
+      gap: 8px;
+    }
+
+    .converter-field input,
+    .converter-field select {
+      width: 100%;
+      height: 38px;
+      border: 1px solid #5b5b57;
+      border-radius: 0;
+      padding: 0 10px;
+      color: #fff;
+      background: #242422;
+      font: inherit;
+      font-size: 12px;
+      color-scheme: dark;
+    }
+
+    .converter-result {
+      min-height: 67px;
+      margin-top: 12px;
+      padding: 11px 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-left: 3px solid var(--gold);
+      background: #242422;
+    }
+
+    .converter-result span {
+      color: #8f8f8b;
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: .12em;
+    }
+
+    .converter-result strong {
+      margin-top: 6px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
     }
 
     .status-badge {
@@ -1737,13 +1844,48 @@
               <div class="rule">单数坤月 37 坤日，双数坤月 36 坤日</div>
               <div class="rule">2 坤月 = 1 坤季</div>
               <div class="rule">四坤年一闰，百坤年不闰，四百坤年再闰</div>
+              <div class="rule love-kun-rule">爱坤日：闰坤年末独立增加的 1 坤日</div>
             </div>
           </section>
 
           <aside class="stage-note">
-            <span class="status-badge">BASKETBALL COURT READY</span>
-            <h2>2.5 倍速的时间宇宙</h2>
-            <p>闰坤年在第十坤月结束后增加一个独立的“爱坤日”。纪元与普通时间均固定采用北京时间（UTC+8）。</p>
+            <h2>坤历转换器</h2>
+            <p class="converter-intro">普通时间按北京时间（UTC+8）解释。</p>
+
+            <div class="converter-tabs" role="tablist" aria-label="转换类型">
+              <button class="converter-tab" type="button" role="tab" aria-selected="true" aria-controls="durationPanel" data-converter-tab="duration">时长转换</button>
+              <button class="converter-tab" type="button" role="tab" aria-selected="false" aria-controls="pointPanel" data-converter-tab="point">时间点转换</button>
+            </div>
+
+            <div id="durationPanel" class="converter-panel" role="tabpanel" data-converter-panel="duration">
+              <div class="converter-field">
+                <label for="durationValue">普通时长</label>
+                <div class="converter-row">
+                  <input id="durationValue" type="number" min="0" step="any" value="60" inputmode="decimal" />
+                  <select id="durationUnit" aria-label="普通时长单位">
+                    <option value="second">秒</option>
+                    <option value="minute">分钟</option>
+                    <option value="hour" selected>小时</option>
+                    <option value="day">日</option>
+                  </select>
+                </div>
+              </div>
+              <output class="converter-result" for="durationValue durationUnit">
+                <span>坤历时长</span>
+                <strong id="durationResult">1 坤日</strong>
+              </output>
+            </div>
+
+            <div id="pointPanel" class="converter-panel" role="tabpanel" data-converter-panel="point" hidden>
+              <div class="converter-field">
+                <label for="pointValue">北京时间点</label>
+                <input id="pointValue" type="datetime-local" step="1" />
+              </div>
+              <output class="converter-result" for="pointValue">
+                <span>坤历时间点</span>
+                <strong id="pointResult">—</strong>
+              </output>
+            </div>
           </aside>
         </div>
 
@@ -1779,7 +1921,14 @@
         dayProgressBar: document.getElementById("dayProgressBar"),
         dayProgressBall: document.querySelector(".progress-ball"),
         todayStatus: document.getElementById("todayStatus"),
-        kunMeme: document.getElementById("kunMeme")
+        kunMeme: document.getElementById("kunMeme"),
+        converterTabs: document.querySelectorAll("[data-converter-tab]"),
+        converterPanels: document.querySelectorAll("[data-converter-panel]"),
+        durationValue: document.getElementById("durationValue"),
+        durationUnit: document.getElementById("durationUnit"),
+        durationResult: document.getElementById("durationResult"),
+        pointValue: document.getElementById("pointValue"),
+        pointResult: document.getElementById("pointResult")
       };
 
       const memeImages = [
@@ -1917,6 +2066,7 @@
         }).format(now);
 
         if (k.beforeEpoch) {
+          document.title = "坤坤纪元尚未开始";
           el.kunDate.textContent = "坤坤纪元尚未开始";
           el.kunClock.innerHTML = "—";
           el.kunSeason.textContent = "坤前时期";
@@ -1932,6 +2082,7 @@
           ? `${yearName(k.year)} · 爱坤日`
           : `${yearName(k.year)} · ${chineseNumber(k.month)}月${chineseNumber(k.day)}日`;
 
+        document.title = `坤坤 ${pad(k.hour)}:${pad(k.minute)}`;
         el.kunDate.textContent = dateText;
         el.kunClock.innerHTML =
           `${pad(k.hour)}:${pad(k.minute)}:${pad(k.second)}` +
@@ -1961,7 +2112,83 @@
         el.kunMeme.alt = "随机小黄鸡表情包";
       }
 
+      function formatKunDuration(realMilliseconds) {
+        if (!Number.isFinite(realMilliseconds) || realMilliseconds < 0) return "请输入有效时长";
+
+        let remainingSeconds = realMilliseconds / SPEED / 1000;
+        const days = Math.floor(remainingSeconds / 86400);
+        remainingSeconds -= days * 86400;
+        const hours = Math.floor(remainingSeconds / 3600);
+        remainingSeconds -= hours * 3600;
+        const minutes = Math.floor(remainingSeconds / 60);
+        const seconds = Number((remainingSeconds - minutes * 60).toFixed(3));
+        const parts = [];
+
+        if (days) parts.push(`${days} 坤日`);
+        if (hours) parts.push(`${hours} 坤时`);
+        if (minutes) parts.push(`${minutes} 坤分`);
+        if (seconds || parts.length === 0) parts.push(`${seconds} 坤秒`);
+        return parts.join(" ");
+      }
+
+      function updateDurationConversion() {
+        const unitMilliseconds = {
+          second: 1000,
+          minute: 60 * 1000,
+          hour: 60 * 60 * 1000,
+          day: REAL_DAY_MS
+        };
+        const value = Number(el.durationValue.value);
+        el.durationResult.textContent = formatKunDuration(value * unitMilliseconds[el.durationUnit.value]);
+      }
+
+      function updatePointConversion() {
+        const input = el.pointValue.value;
+        if (!input) {
+          el.pointResult.textContent = "请选择北京时间";
+          return;
+        }
+
+        const normalizedInput = input.length === 16 ? `${input}:00` : input;
+        const point = new Date(`${normalizedInput}+08:00`);
+        const k = parseKunDate(point);
+
+        if (Number.isNaN(point.getTime()) || k.beforeEpoch) {
+          el.pointResult.textContent = k.beforeEpoch ? "坤坤纪元尚未开始" : "请输入有效时间";
+          return;
+        }
+
+        const dateText = k.leapDay
+          ? `${yearName(k.year)} · 爱坤日`
+          : `${yearName(k.year)} · ${chineseNumber(k.month)}月${chineseNumber(k.day)}日`;
+        el.pointResult.textContent = `${dateText} ${pad(k.hour)}:${pad(k.minute)}:${pad(k.second)}`;
+      }
+
+      function initializeConverter() {
+        const beijingNow = new Date(Date.now() + serverOffsetMs + 8 * 60 * 60 * 1000);
+        el.pointValue.value = beijingNow.toISOString().slice(0, 19);
+
+        el.converterTabs.forEach((tab) => {
+          tab.addEventListener("click", () => {
+            const target = tab.dataset.converterTab;
+            el.converterTabs.forEach((item) => {
+              item.setAttribute("aria-selected", String(item === tab));
+            });
+            el.converterPanels.forEach((panel) => {
+              panel.hidden = panel.dataset.converterPanel !== target;
+            });
+          });
+        });
+
+        el.durationValue.addEventListener("input", updateDurationConversion);
+        el.durationUnit.addEventListener("change", updateDurationConversion);
+        el.pointValue.addEventListener("input", updatePointConversion);
+        updateDurationConversion();
+        updatePointConversion();
+      }
+
       showRandomMeme();
+      initializeConverter();
 
       async function syncWithApi() {
         if (location.protocol === "file:") return;
