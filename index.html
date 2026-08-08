@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#111827" />
+  <title>坤坤时钟</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: rgba(18, 25, 48, 0.82);
+      --panel-2: rgba(28, 38, 68, 0.72);
+      --text: #f8fafc;
+      --muted: #a8b3cf;
+      --line: rgba(255,255,255,.10);
+      --accent: #ffd166;
+      --accent-2: #7dd3fc;
+      --danger: #fb7185;
+      --shadow: 0 24px 80px rgba(0,0,0,.35);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      min-height: 100%;
+      margin: 0;
+      font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 20%, rgba(125,211,252,.16), transparent 28%),
+        radial-gradient(circle at 80% 15%, rgba(255,209,102,.14), transparent 30%),
+        linear-gradient(145deg, #080b16 0%, #101831 56%, #0b1020 100%);
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+      padding: 28px 16px;
+    }
+
+    .app {
+      width: min(980px, 100%);
+    }
+
+    .hero {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: linear-gradient(145deg, rgba(25,34,63,.92), rgba(10,15,31,.88));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "2.5";
+      position: absolute;
+      right: 18px;
+      top: -22px;
+      font-weight: 900;
+      font-size: clamp(88px, 19vw, 190px);
+      color: rgba(255,255,255,.035);
+      pointer-events: none;
+      letter-spacing: -.08em;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 18px var(--accent);
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      50% { opacity: .35; transform: scale(.72); }
+    }
+
+    h1 {
+      margin: 12px 0 6px;
+      font-size: clamp(34px, 6vw, 64px);
+      line-height: 1;
+      letter-spacing: -.05em;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin: 0;
+      font-size: 15px;
+    }
+
+    .date {
+      margin-top: 34px;
+      font-size: clamp(22px, 4vw, 38px);
+      font-weight: 750;
+      letter-spacing: -.02em;
+    }
+
+    .clock {
+      margin-top: 8px;
+      font-variant-numeric: tabular-nums;
+      font-size: clamp(52px, 12vw, 116px);
+      line-height: 1;
+      font-weight: 850;
+      letter-spacing: -.065em;
+      text-shadow: 0 0 30px rgba(125,211,252,.12);
+    }
+
+    .clock .fraction {
+      color: var(--accent-2);
+      font-size: .38em;
+      letter-spacing: -.02em;
+      margin-left: 8px;
+    }
+
+    .progress-wrap {
+      margin-top: 28px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 9px;
+    }
+
+    .progress {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      overflow: hidden;
+    }
+
+    .progress > div {
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent-2), var(--accent));
+      transition: width .15s linear;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--panel);
+      backdrop-filter: blur(14px);
+    }
+
+    .card .label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .card .value {
+      margin-top: 8px;
+      font-size: 20px;
+      font-weight: 750;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .rules {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 14px;
+    }
+
+    .rule-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .rule {
+      padding: 12px 13px;
+      border-radius: 14px;
+      background: var(--panel-2);
+      color: #dbe6ff;
+      font-size: 13px;
+      border: 1px solid rgba(255,255,255,.06);
+    }
+
+    .status {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .status strong {
+      display: block;
+      font-size: 21px;
+      margin-top: 8px;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 720px) {
+      .hero { padding: 22px; border-radius: 22px; }
+      .grid { grid-template-columns: 1fr; }
+      .rules { grid-template-columns: 1fr; }
+      .rule-list { grid-template-columns: 1fr; }
+      .clock { letter-spacing: -.045em; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="hero">
+      <div class="eyebrow"><span class="dot"></span> KUN CLOCK · LIVE</div>
+      <h1>坤坤时钟</h1>
+      <p class="subtitle">一坤日 = 2.5 个普通日 · 一坤时 = 2.5 个普通小时</p>
+
+      <div id="kunDate" class="date">正在计算坤历日期…</div>
+      <div id="kunClock" class="clock">00:00:00<span class="fraction">.000</span></div>
+
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span>当前坤日进度</span>
+          <span id="dayProgressText">0.000%</span>
+        </div>
+        <div class="progress"><div id="dayProgressBar"></div></div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <div class="label">普通时间</div>
+        <div id="normalTime" class="value">—</div>
+      </div>
+      <div class="card">
+        <div class="label">当前坤季</div>
+        <div id="kunSeason" class="value">—</div>
+      </div>
+      <div class="card">
+        <div class="label">坤年进度</div>
+        <div id="yearProgress" class="value">—</div>
+      </div>
+    </section>
+
+    <section class="rules">
+      <div class="card">
+        <div class="label">当前采用的坤坤历规则</div>
+        <div class="rule-list">
+          <div class="rule">纪元：2018-01-01 00:00</div>
+          <div class="rule">1 坤日 = 60 普通小时</div>
+          <div class="rule">每年 10 个坤月</div>
+          <div class="rule">单月 37 日，双月 36 日</div>
+          <div class="rule">每两月构成一个坤季</div>
+          <div class="rule">四年一闰，百年不闰，四百年再闰</div>
+        </div>
+      </div>
+
+      <div class="card status">
+        <div>
+          <div class="label">今日状态</div>
+          <strong id="todayStatus">—</strong>
+        </div>
+        <div class="small">
+          闰年在十月结束后增加一个独立的“闰坤日”。网页按设备本地时区解释纪元时刻。
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">刷新页面不会重置时间；所有计算均在浏览器本地完成。</div>
+  </main>
+
+  <script>
+    (() => {
+      const SPEED = 2.5;
+      const REAL_DAY_MS = 24 * 60 * 60 * 1000;
+      const KUN_DAY_REAL_MS = SPEED * REAL_DAY_MS;
+      const EPOCH = new Date(2018, 0, 1, 0, 0, 0, 0);
+      const MONTH_LENGTHS = [37, 36, 37, 36, 37, 36, 37, 36, 37, 36];
+
+      const el = {
+        kunDate: document.getElementById("kunDate"),
+        kunClock: document.getElementById("kunClock"),
+        normalTime: document.getElementById("normalTime"),
+        kunSeason: document.getElementById("kunSeason"),
+        yearProgress: document.getElementById("yearProgress"),
+        dayProgressText: document.getElementById("dayProgressText"),
+        dayProgressBar: document.getElementById("dayProgressBar"),
+        todayStatus: document.getElementById("todayStatus")
+      };
+
+      function isLeapKunYear(year) {
+        return year % 400 === 0 || (year % 4 === 0 && year % 100 !== 0);
+      }
+
+      function daysInKunYear(year) {
+        return isLeapKunYear(year) ? 366 : 365;
+      }
+
+      function chineseNumber(n) {
+        const digits = ["零","一","二","三","四","五","六","七","八","九"];
+        if (n < 10) return digits[n];
+        if (n === 10) return "十";
+        if (n < 20) return "十" + digits[n % 10];
+        if (n < 100) {
+          const tens = Math.floor(n / 10);
+          const ones = n % 10;
+          return digits[tens] + "十" + (ones ? digits[ones] : "");
+        }
+        return String(n);
+      }
+
+      function yearName(year) {
+        return year === 1 ? "坤坤元年" : `坤坤${chineseNumber(year)}年`;
+      }
+
+      function parseKunDate(now) {
+        const realElapsed = now.getTime() - EPOCH.getTime();
+
+        if (realElapsed < 0) {
+          return { beforeEpoch: true, realElapsed };
+        }
+
+        const kunElapsedMs = realElapsed / SPEED;
+        const totalKunDays = kunElapsedMs / REAL_DAY_MS;
+        let wholeDays = Math.floor(totalKunDays);
+        const dayFraction = totalKunDays - wholeDays;
+
+        let year = 1;
+        while (wholeDays >= daysInKunYear(year)) {
+          wholeDays -= daysInKunYear(year);
+          year++;
+        }
+
+        const dayOfYearZeroBased = wholeDays;
+        const yearLength = daysInKunYear(year);
+
+        let month = null;
+        let day = null;
+        let leapDay = false;
+        let remaining = wholeDays;
+
+        for (let i = 0; i < MONTH_LENGTHS.length; i++) {
+          if (remaining < MONTH_LENGTHS[i]) {
+            month = i + 1;
+            day = remaining + 1;
+            break;
+          }
+          remaining -= MONTH_LENGTHS[i];
+        }
+
+        if (month === null) {
+          leapDay = true;
+        }
+
+        const kunSecondsInDay = dayFraction * 24 * 60 * 60;
+        const hour = Math.floor(kunSecondsInDay / 3600);
+        const minute = Math.floor((kunSecondsInDay % 3600) / 60);
+        const second = Math.floor(kunSecondsInDay % 60);
+        const millisecond = Math.floor((kunSecondsInDay - Math.floor(kunSecondsInDay)) * 1000);
+
+        return {
+          beforeEpoch: false,
+          year,
+          month,
+          day,
+          leapDay,
+          hour,
+          minute,
+          second,
+          millisecond,
+          dayFraction,
+          dayOfYearZeroBased,
+          yearLength
+        };
+      }
+
+      function pad(n, len = 2) {
+        return String(n).padStart(len, "0");
+      }
+
+      function update() {
+        const now = new Date();
+        const k = parseKunDate(now);
+
+        el.normalTime.textContent = new Intl.DateTimeFormat("zh-CN", {
+          year: "numeric", month: "2-digit", day: "2-digit",
+          hour: "2-digit", minute: "2-digit", second: "2-digit",
+          hour12: false
+        }).format(now);
+
+        if (k.beforeEpoch) {
+          el.kunDate.textContent = "坤坤纪元尚未开始";
+          el.kunClock.innerHTML = "—";
+          el.kunSeason.textContent = "坤前时期";
+          el.yearProgress.textContent = "—";
+          el.todayStatus.textContent = "等待元年";
+          el.dayProgressText.textContent = "—";
+          el.dayProgressBar.style.width = "0%";
+          return;
+        }
+
+        const dateText = k.leapDay
+          ? `${yearName(k.year)} · 闰坤日`
+          : `${yearName(k.year)} · ${chineseNumber(k.month)}月${chineseNumber(k.day)}日`;
+
+        el.kunDate.textContent = dateText;
+        el.kunClock.innerHTML =
+          `${pad(k.hour)}:${pad(k.minute)}:${pad(k.second)}` +
+          `<span class="fraction">.${pad(k.millisecond, 3)}</span>`;
+
+        if (k.leapDay) {
+          el.kunSeason.textContent = "年终 · 闰坤日";
+          el.todayStatus.textContent = "特殊闰日";
+        } else {
+          const season = Math.ceil(k.month / 2);
+          el.kunSeason.textContent = `第${chineseNumber(season)}坤季`;
+          el.todayStatus.textContent = k.month % 2 === 1 ? "大坤月" : "小坤月";
+        }
+
+        const dayPercent = k.dayFraction * 100;
+        el.dayProgressText.textContent = `${dayPercent.toFixed(3)}%`;
+        el.dayProgressBar.style.width = `${dayPercent}%`;
+
+        const yearPercent = ((k.dayOfYearZeroBased + k.dayFraction) / k.yearLength) * 100;
+        el.yearProgress.textContent = `${yearPercent.toFixed(3)}%`;
+      }
+
+      update();
+      setInterval(update, 40);
+    })();
+  </script>
+</body>
+</html>
