@@ -83,16 +83,16 @@ function parseKunDate(timestamp) {
     day,
     leapDay,
     season,
-    seasonName: leapDay ? "年终 · 闰坤日" : `第${chineseNumber(season)}坤季`,
+    seasonName: leapDay ? "年终 · 爱坤日" : `第${chineseNumber(season)}坤季`,
     dateText: leapDay
-      ? `${yearName(year)} · 闰坤日`
+      ? `${yearName(year)} · 爱坤日`
       : `${yearName(year)} · ${chineseNumber(month)}月${chineseNumber(day)}日`,
     hour,
     minute,
     second,
     millisecond,
     time: `${pad(hour)}:${pad(minute)}:${pad(second)}.${pad(millisecond, 3)}`,
-    status: leapDay ? "特殊闰日" : month % 2 === 1 ? "大坤月" : "小坤月",
+    status: leapDay ? "爱坤日" : month % 2 === 1 ? "大坤月" : "小坤月",
     dayProgress: Number((dayFraction * 100).toFixed(6)),
     yearProgress: Number((((dayOfYearZeroBased + dayFraction) / yearLength) * 100).toFixed(6))
   };

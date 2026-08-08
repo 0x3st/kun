@@ -1743,7 +1743,7 @@
           <aside class="stage-note">
             <span class="status-badge">BASKETBALL COURT READY</span>
             <h2>2.5 倍速的时间宇宙</h2>
-            <p>闰坤年在第十坤月结束后增加一个独立的“闰坤日”。纪元与普通时间均固定采用北京时间（UTC+8）。</p>
+            <p>闰坤年在第十坤月结束后增加一个独立的“爱坤日”。纪元与普通时间均固定采用北京时间（UTC+8）。</p>
           </aside>
         </div>
 
@@ -1753,6 +1753,8 @@
           <span>图片源自知乎专栏《<a href="https://zhuanlan.zhihu.com/p/578391399" target="_blank" rel="noreferrer">389张小黄鸡头像</a>》</span>
           <span>·</span>
           <span>域名来自 <a href="https://nic.py.kg" target="_blank" rel="noreferrer">nic.py.kg</a></span>
+          <span>·</span>
+          <span>设计灵感来源于 <a href="https://time.is" target="_blank" rel="noreferrer">time.is</a></span>
         </footer>
       </div>
     </section>
@@ -1927,7 +1929,7 @@
         }
 
         const dateText = k.leapDay
-          ? `${yearName(k.year)} · 闰坤日`
+          ? `${yearName(k.year)} · 爱坤日`
           : `${yearName(k.year)} · ${chineseNumber(k.month)}月${chineseNumber(k.day)}日`;
 
         el.kunDate.textContent = dateText;
@@ -1936,8 +1938,8 @@
           `<span class="fraction">.${pad(k.millisecond, 3)}</span>`;
 
         if (k.leapDay) {
-          el.kunSeason.textContent = "年终 · 闰坤日";
-          el.todayStatus.textContent = "特殊闰日";
+          el.kunSeason.textContent = "年终 · 爱坤日";
+          el.todayStatus.textContent = "爱坤日";
         } else {
           const season = Math.ceil(k.month / 2);
           el.kunSeason.textContent = `第${chineseNumber(season)}坤季`;
